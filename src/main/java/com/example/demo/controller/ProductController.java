@@ -18,7 +18,6 @@ public class ProductController {
     @GetMapping("/products")
     public String getProducts(Model model)
     {
-        System.out.println("da");
         List<Product> products = productService.getProducts();
 
         model.addAttribute("products" , products);

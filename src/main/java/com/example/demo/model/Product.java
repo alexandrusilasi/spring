@@ -1,10 +1,7 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +21,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    @Column(unique = true)
+    private String slug;
+
     private String description;
     private String brand;
     private BigDecimal price;
@@ -37,5 +38,20 @@ public class Product {
     @Override
     public String toString() {
         return "Name: '" + this.name + "', Price: '" + this.price;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void setSlug()
+    {
+        this.slug = generateSlug(this.name);
+    }
+
+
+    private String generateSlug(String title) {
+        return title.toLowerCase()
+                .replaceAll("[^a-z0-9\\s-]", "")
+                .trim()
+                .replaceAll("\\s+", "-");
     }
 }
