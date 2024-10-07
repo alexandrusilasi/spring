@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:replace="pageTitle">Default Title</title>
+</head>
+<body>
+<!-- Header Section (Common for all pages) -->
+<header>
+    <h1>My Website</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/about}">About</a></li>
+            <li><a th:href="@{/contact}">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Main Content Area (Customizable) -->
+<main th:replace="~{layouts/main :: content}">
+    <!-- This will be replaced in individual templates -->
+    <p>This is default content in the main section.</p>
+</main>
+
+<!-- Footer Section (Common for all pages) -->
+<footer>
+    <p>© 2024 My Website</p>
+</footer>
+</body>
+</html>

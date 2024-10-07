@@ -24,7 +24,6 @@ public class Product {
 
     @Column(unique = true)
     private String slug;
-
     private String description;
     private String brand;
     private BigDecimal price;
