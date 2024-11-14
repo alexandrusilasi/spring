@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.form.ProductFormDTO;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,22 @@ public class ProductController {
     public void addProduct(@RequestBody Product product)
     {
         productService.addProduct(product);
+    }
+
+    @GetMapping("/product/add")
+    public String addProduct()
+    {
+        return "product/add";
+    }
+
+    @PostMapping("/product/create")
+    public String createProduct(@ModelAttribute ProductFormDTO productFormDTO)
+    {
+        productFormDTO.setAvailable(true);
+
+        System.out.println(productFormDTO);
+
+        return "product/add";
     }
 
     @GetMapping("/product/{prodSlug}")

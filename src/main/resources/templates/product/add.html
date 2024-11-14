@@ -1,0 +1,33 @@
+<html lang="en" xmlns:layout="http://www.thymeleaf.org" layout:decorate="layouts/main">
+<h1 class="h3 mb-0 text-gray-800" layout:fragment="page-title">Adauga produs</h1>
+<div class="card" layout:fragment="content">
+    <div class="card-body">
+        <form action="/product/create" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nume</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descriere</label>
+                <textarea class="form-control" id="description" rows="6" name="description" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Pret</label>
+                <input type="number" class="form-control" id="price" name="price" required>
+            </div>
+            <div class="mb-3">
+                <label for="qty" class="form-label">Cantitate</label>
+                <input type="number" class="form-control" id="qty" name="quantity" required>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Categorie</label>
+                <input type="text" class="form-control" id="category" name="category" required>
+            </div>
+            <div class="mb-3">
+                <label for="brand" class="form-label">Brand</label>
+                <input type="text" class="form-control" id="brand" name="brand" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
