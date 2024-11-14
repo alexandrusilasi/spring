@@ -22,7 +22,7 @@ public class ProductController {
 
         model.addAttribute("products" , products);
 
-        return "products";
+        return "product/index";
     }
 
     @PostMapping("/product")
@@ -32,10 +32,14 @@ public class ProductController {
         productService.addProduct(product);
     }
 
-    @GetMapping("/product/{prodId}")
-    public Product getProduct(@PathVariable int prodId)
+    @GetMapping("/product/{prodSlug}")
+    public String getProduct(@PathVariable String prodSlug, Model model)
     {
-        return productService.getProductById(prodId);
+        Product product = productService.getProductBySlug(prodSlug);
+
+        model.addAttribute("product" , product);
+
+        return "product/view";
     }
 
     @PutMapping("/product")

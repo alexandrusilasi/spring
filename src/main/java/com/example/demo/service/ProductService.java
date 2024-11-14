@@ -20,6 +20,9 @@ public class ProductService {
     public Product getProductById(int id) {
         return productRepo.findById(id).orElse(new Product());
     }
+    public Product getProductBySlug(String slug) {
+        return productRepo.findBySlug(slug);
+    }
 
     public void addProduct(Product product) {
         productRepo.save(product);

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -36,7 +37,8 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Name: '" + this.name + "', Price: '" + this.price;
+
+        return "Name: '" + this.name + "', Price: '" + this.price + "', Category: '" + this.category + "', Brand: '" + this.brand + "', " + "Price: '" + this.price + "', Quantity: '" + this.quantity + "', " + "Available: '" + this.available + "'";
     }
 
     @PrePersist
@@ -45,7 +47,6 @@ public class Product {
     {
         this.slug = generateSlug(this.name);
     }
-
 
     private String generateSlug(String title) {
         return title.toLowerCase()

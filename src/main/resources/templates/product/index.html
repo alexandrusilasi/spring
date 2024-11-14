@@ -1,0 +1,12 @@
+<html lang="en" xmlns:layout="http://www.thymeleaf.org" layout:decorate="layouts/main">
+<span layout:fragment="page-title">Produse</span>
+<div layout:fragment="content">
+    <h1>Products </h1>
+    <div th:each="product: ${products}">
+        <p>Product ID: <span th:text="${product.id}"></span></p>
+        <p>Product Name: <span th:text="${product.name}"></span></p>
+        <p>Product Price: <span th:text="${product.price}"></span></p>
+        <p><a th:href="@{/product/{slug}(slug=${product.slug})}"><button type="button" class="btn btn-primary">Detalii</button></a></p>
+    </div>
+</div>
+</html>
