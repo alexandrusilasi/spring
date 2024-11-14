@@ -1,12 +1,29 @@
 <html lang="en" xmlns:layout="http://www.thymeleaf.org" layout:decorate="layouts/main">
 <span layout:fragment="page-title">Produse</span>
 <div layout:fragment="content">
-    <h1>Products </h1>
-    <div th:each="product: ${products}">
-        <p>Product ID: <span th:text="${product.id}"></span></p>
-        <p>Product Name: <span th:text="${product.name}"></span></p>
-        <p>Product Price: <span th:text="${product.price}"></span></p>
-        <p><a th:href="@{/product/{slug}(slug=${product.slug})}"><button type="button" class="btn btn-primary">Detalii</button></a></p>
+    <div class="card">
+        <div class="card-body table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Available</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product: ${products}">
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.category}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${product.available}"></td>
+                    <td><a th:href="@{/product/{slug}(slug=${product.slug})}"><button type="button" class="btn btn-primary btn-sm">Detalii</button></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </html>
