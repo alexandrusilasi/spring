@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.form.ProductFormDTO;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,21 @@ public class ProductService {
 
     public void addProduct(Product product) {
         productRepo.save(product);
+    }
+
+    public boolean createProduct(ProductFormDTO productFormDTO) {
+        Product product = new Product();
+
+        product.setName(productFormDTO.getName());
+        product.setDescription(productFormDTO.getDescription());
+        product.setPrice(productFormDTO.getPrice());
+        product.setCategory(productFormDTO.getCategory());
+        product.setBrand(productFormDTO.getBrand());
+        product.setAvailable(productFormDTO.getAvailable());
+
+        productRepo.save(product);
+
+        return true;
     }
 
     public void updateProduct(Product product) {

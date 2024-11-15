@@ -3,10 +3,15 @@ package com.example.demo.controller;
 import com.example.demo.form.ProductFormDTO;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -40,13 +45,22 @@ public class ProductController {
     }
 
     @PostMapping("/product/create")
-    public String createProduct(@ModelAttribute ProductFormDTO productFormDTO)
+    public RedirectView createProduct(@Valid @ModelAttribute ProductFormDTO productFormDTO, RedirectAttributes redirectAttributes)
     {
-        productFormDTO.setAvailable(true);
-
         System.out.println(productFormDTO);
 
-        return "product/add";
+        boolean isSaved = productService.createProduct(productFormDTO);
+
+        if(isSaved)
+        {
+            redirectAttributes.addFlashAttribute("message", "Product added successfully");
+        }
+        else
+        {
+            redirectAttributes.addFlashAttribute("message", "Product already exists");
+        }
+
+        return new RedirectView("/products");
     }
 
     @GetMapping("/product/{prodSlug}")
