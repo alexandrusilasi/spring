@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 @Entity
@@ -34,6 +36,14 @@ public class Product {
     private Date releaseDate;
     private boolean available;
     private int quantity;
+
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "product_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories;
 
     @Override
     public String toString() {

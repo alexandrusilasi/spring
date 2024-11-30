@@ -21,7 +21,13 @@
             </div>
             <div class="mb-3">
                 <label for="category" class="form-label">Categorie</label>
-                <input type="text" class="form-control" id="category" name="category" required>
+                <select id="category" class="custom-select" th:field="*{categories}">
+                    <option value="">-- Selectează o opțiune --</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}">
+                    </option>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="brand" class="form-label">Brand</label>

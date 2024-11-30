@@ -1,0 +1,13 @@
+<html lang="en" xmlns:layout="http://www.thymeleaf.org" layout:decorate="layouts/main">
+<h1 class="h3 mb-0 text-gray-800" layout:fragment="page-title">Adauga categorie</h1>
+<div class="card" layout:fragment="content">
+    <div class="card-body">
+        <form action="/category/create" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nume</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.form.ProductFormDTO;
+import com.example.demo.model.Category;
 import com.example.demo.model.Product;
+import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    CategoryService categoryService;
+
     @GetMapping("/products")
     public String getProducts(Model model)
     {
@@ -39,8 +44,12 @@ public class ProductController {
     }
 
     @GetMapping("/product/add")
-    public String addProduct()
+    public String addProduct(Model model)
     {
+        List<Category> categories = categoryService.getCategories();
+
+        model.addAttribute("categories" , categories);
+
         return "product/add";
     }
 

@@ -1,0 +1,24 @@
+<html lang="en" xmlns:layout="http://www.thymeleaf.org" layout:decorate="layouts/main">
+<h1 class="h3 mb-0 text-gray-800" layout:fragment="page-title">Categorii <a href="/category/add" class="float-right"><button type="button" class="btn btn-success btn-sm">Adauga</button></a></h1>
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-body table-responsive">
+            <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="category: ${categories}">
+                    <td th:text="${category.name}"></td>
+                    <td><a th:href="@{/category/{slug}(slug=${category.slug})}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</html>
