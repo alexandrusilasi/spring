@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class ProductController {
 
     @Autowired
@@ -37,13 +38,6 @@ public class ProductController {
 
         return "product/index";
     }
-
-//    @PostMapping("/product")
-//    @ResponseBody
-//    public void addProduct(@RequestPart Product product, @RequestPart MultipartFile imageFile, RedirectAttributes redirectAttributes)
-//    {
-//        productService.addProduct(product);
-//    }
 
     @GetMapping("/product/add")
     public String addProduct(Model model)
