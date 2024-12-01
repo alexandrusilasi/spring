@@ -39,11 +39,7 @@ public class Product {
     private boolean available;
     private int quantity;
 
-    private String imageName;
-    private String imageType;
-
-    @Lob
-    private byte[] imageDate;
+    private String imageUrl;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(

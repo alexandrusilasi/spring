@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.form.ProductFormDTO;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepo;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,9 @@ public class ProductService {
 
     @Autowired
     ProductRepo productRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     public List<Product> getProducts() {
         return productRepo.findAll();
@@ -31,20 +35,11 @@ public class ProductService {
         productRepo.save(product);
     }
 
-    public boolean createProduct(ProductFormDTO productFormDTO, MultipartFile imageFile) throws IOException {
-        Product product = new Product();
+    public boolean createProduct(ProductFormDTO productFormDTO, MultipartFile imageFile){
 
-        product.setName(productFormDTO.getName());
-        product.setDescription(productFormDTO.getDescription());
-        product.setPrice(productFormDTO.getPrice());
-        product.setCategories(productFormDTO.getCategories());
-        product.setBrand(productFormDTO.getBrand());
-        product.setAvailable(productFormDTO.getAvailable());
-        product.setSlug(generateUniqueSlug(productFormDTO.getName()));
+        Product product = modelMapper.map(productFormDTO, Product.class);
 
-        product.setImageName(imageFile.getOriginalFilename());
-        product.setImageType(imageFile.getContentType());
-        product.setImageDate(imageFile.getBytes());
+        product.setImageUrl(FileService.upload(imageFile));
 
         productRepo.save(product);
 

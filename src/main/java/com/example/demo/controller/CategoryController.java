@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class CategoryController {
 
     @Autowired
@@ -60,7 +61,7 @@ public class CategoryController {
             redirectAttributes.addFlashAttribute("message", "Category already exists");
         }
 
-        return new RedirectView("/categories");
+        return new RedirectView("/admin/categories");
     }
 
     @GetMapping("/category/{categorySlug}")

@@ -52,6 +52,8 @@ public class ProductController {
     @PostMapping("/product/create")
     public RedirectView createProduct(@Valid @ModelAttribute ProductFormDTO productFormDTO, @RequestPart MultipartFile imageFile, RedirectAttributes redirectAttributes) throws IOException {
 
+        System.out.println(productFormDTO);
+
         boolean isSaved = productService.createProduct(productFormDTO, imageFile);
 
         if(isSaved)
@@ -63,7 +65,7 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("message", "Product already exists");
         }
 
-        return new RedirectView("/products");
+        return new RedirectView("/admin/products");
     }
 
     @GetMapping("/product/{prodSlug}")

@@ -9,6 +9,9 @@
             <li th:each="category : ${product.categories}" th:text="${category.name}"></li>
         </ul>
         <p>Product Quantity: <span th:text="${product.quantity}"></span></p>
+        <p>Product Image:
+            <img th:src="${product.imageUrl}" th:alt="${product.name}" style="width: 100px;">
+        </p>
     </div>
 </div>
 </html>
