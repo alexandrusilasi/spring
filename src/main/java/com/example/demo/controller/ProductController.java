@@ -12,9 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -36,12 +38,12 @@ public class ProductController {
         return "product/index";
     }
 
-    @PostMapping("/product")
-    @ResponseBody
-    public void addProduct(@RequestBody Product product)
-    {
-        productService.addProduct(product);
-    }
+//    @PostMapping("/product")
+//    @ResponseBody
+//    public void addProduct(@RequestPart Product product, @RequestPart MultipartFile imageFile, RedirectAttributes redirectAttributes)
+//    {
+//        productService.addProduct(product);
+//    }
 
     @GetMapping("/product/add")
     public String addProduct(Model model)
@@ -54,11 +56,9 @@ public class ProductController {
     }
 
     @PostMapping("/product/create")
-    public RedirectView createProduct(@Valid @ModelAttribute ProductFormDTO productFormDTO, RedirectAttributes redirectAttributes)
-    {
-        System.out.println(productFormDTO);
+    public RedirectView createProduct(@Valid @ModelAttribute ProductFormDTO productFormDTO, @RequestPart MultipartFile imageFile, RedirectAttributes redirectAttributes) throws IOException {
 
-        boolean isSaved = productService.createProduct(productFormDTO);
+        boolean isSaved = productService.createProduct(productFormDTO, imageFile);
 
         if(isSaved)
         {

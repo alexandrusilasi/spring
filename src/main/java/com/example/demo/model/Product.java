@@ -2,6 +2,9 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,12 +33,17 @@ public class Product {
     private String description;
     private String brand;
     private BigDecimal price;
-    private String category;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Date releaseDate;
     private boolean available;
     private int quantity;
+
+    private String imageName;
+    private String imageType;
+
+    @Lob
+    private byte[] imageDate;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
@@ -48,20 +56,6 @@ public class Product {
     @Override
     public String toString() {
 
-        return "Name: '" + this.name + "', Price: '" + this.price + "', Category: '" + this.category + "', Brand: '" + this.brand + "', " + "Price: '" + this.price + "', Quantity: '" + this.quantity + "', " + "Available: '" + this.available + "'";
-    }
-
-    @PrePersist
-    @PreUpdate
-    public void setSlug()
-    {
-        this.slug = generateSlug(this.name);
-    }
-
-    private String generateSlug(String title) {
-        return title.toLowerCase()
-                .replaceAll("[^a-z0-9\\s-]", "")
-                .trim()
-                .replaceAll("\\s+", "-");
+        return "Name: '" + this.name + "', Price: '" + this.price + "', Brand: '" + this.brand + "', " + "Price: '" + this.price + "', Quantity: '" + this.quantity + "', " + "Available: '" + this.available + "'";
     }
 }
