@@ -3,12 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.form.ProductFormDTO;
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
+import com.example.demo.repository.ProductRepo;
 import com.example.demo.service.CategoryService;
 import com.example.demo.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +27,8 @@ public class ProductController {
 
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    private ProductRepo productRepo;
 
     @GetMapping("/products")
     public String getProducts(Model model)
@@ -51,8 +52,6 @@ public class ProductController {
 
     @PostMapping("/product/create")
     public RedirectView createProduct(@Valid @ModelAttribute ProductFormDTO productFormDTO, @RequestPart MultipartFile imageFile, RedirectAttributes redirectAttributes) throws IOException {
-
-        System.out.println(productFormDTO);
 
         boolean isSaved = productService.createProduct(productFormDTO, imageFile);
 
@@ -78,16 +77,49 @@ public class ProductController {
         return "product/view";
     }
 
-    @PutMapping("/product")
-    public void updateProduct(@RequestBody Product product)
+    @GetMapping("/product/{prodSlug}/edit")
+    public String editProduct(@PathVariable String prodSlug, Model model)
     {
-        productService.updateProduct(product);
+        Product product = productService.getProductBySlug(prodSlug);
+        List<Category> categories = categoryService.getCategories();
+
+        model.addAttribute("categories" , categories);
+        model.addAttribute("product" , product);
+
+        return "product/edit";
+    }
+
+    @PutMapping("/product")
+    public RedirectView updateProduct(@Valid @ModelAttribute ProductFormDTO productFormDTO, @RequestPart MultipartFile imageFile, RedirectAttributes redirectAttributes)
+    {
+        boolean isSaved = productService.updateProduct(productFormDTO, imageFile);
+
+        if(isSaved)
+        {
+            redirectAttributes.addFlashAttribute("message", "Product updated successfully");
+        }
+        else
+        {
+            redirectAttributes.addFlashAttribute("message", "Product already exists");
+        }
+
+        return new RedirectView("/admin/products");
     }
 
     @DeleteMapping("/product")
-    public void deleteProduct(@RequestBody Product product)
+    public RedirectView deleteProduct(@RequestParam int id, RedirectAttributes redirectAttributes)
     {
-        productService.deleteProduct(product);
+        Product product = productRepo.findById(id).orElse(null);
+
+        if(product != null)
+        {
+            productService.deleteProduct(product);
+            redirectAttributes.addFlashAttribute("message", "Product deleted successfully");
+        }
+        else
+            redirectAttributes.addFlashAttribute("message", "Product not found");
+
+        return new RedirectView("/admin/products");
     }
 
 }

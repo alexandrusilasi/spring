@@ -13,6 +13,9 @@ import java.util.List;
 public class ProductFormDTO {
 
     @NotNull
+    private int id;
+
+    @NotNull
     private Boolean available;
 
     @NotNull(message = "Name can't be left blank")

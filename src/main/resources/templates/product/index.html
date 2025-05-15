@@ -31,7 +31,15 @@
                         <i th:if="${product.available}" class="fas fa-check"></i>
                         <i th:unless="${product.available}" class="fas fa-times"></i>
                     </td>
-                    <td><a th:href="@{/admin/product/{slug}(slug=${product.slug})}"><button type="button" class="btn btn-primary btn-sm">Detalii</button></a></td>
+                    <td>
+                        <a th:href="@{/admin/product/{slug}(slug=${product.slug})}"><button type="button" class="btn btn-primary btn-sm">Detalii</button></a>
+                        <a th:href="@{/admin/product/{slug}/edit(slug=${product.slug})}"><button type="button" class="btn btn-warning btn-sm">Edit</button></a>
+                        <form action="/admin/product" method="post" class="d-inline-block" onsubmit="return confirm('Sigur stergi produsul?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="id" th:value="${product.id}">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>

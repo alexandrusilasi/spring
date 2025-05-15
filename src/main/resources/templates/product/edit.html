@@ -1,0 +1,50 @@
+<html lang="en" xmlns:layout="http://www.thymeleaf.org" layout:decorate="layouts/main">
+<h1 class="h3 mb-0 text-gray-800" layout:fragment="page-title">Adauga produs</h1>
+<div class="card" layout:fragment="content">
+    <div class="card-body">
+        <form action="/admin/product" method="post"  enctype="multipart/form-data">
+            <input type="hidden" name="_method" value="PUT">
+            <input type="hidden" name="id" th:value="${product.id}">
+            <div class="mb-3">
+                <label for="name" class="form-label">Nume</label>
+                <input type="text" class="form-control" id="name" name="name" th:value="${product.name}" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descriere</label>
+                <textarea class="form-control" id="description" rows="6" name="description" required th:text="${product.description}"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Pret</label>
+                <input type="number" class="form-control" id="price" name="price" th:value="${product.price}" required>
+            </div>
+            <div class="mb-3">
+                <label for="qty" class="form-label">Cantitate</label>
+                <input type="number" class="form-control" id="qty" name="quantity" th:value="${product.quantity}" required>
+            </div>
+            <div class="mb-3">
+                <label for="category" class="form-label">Categorie</label>
+                <select id="category" class="custom-select" name="categories">
+                    <option value="">-- Selectează o opțiune --</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}"
+                            th:selected="${product.categories.contains(category)}"
+                    >
+                    </option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="brand" class="form-label">Brand</label>
+                <input type="text" class="form-control" id="brand" th:value="${product.brand}" name="brand" required>
+            </div>
+            <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                <input id="upload" type="file" name="imageFile" class="form-control border-0">
+                <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
+                <div class="input-group-append">
+                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
